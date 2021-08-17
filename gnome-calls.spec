@@ -3,12 +3,12 @@ Summary:	GNOME phone dialer and call handler
 Summary(pl.UTF-8):	Aplikacja GNOME do dzwonienia i przyjmowania połączeń
 Name:		gnome-calls
 Version:	41
-%define	subver	alpha
+%define	subver	beta
 Release:	0.%{subver}.1
 License:	GPL v3+
 Group:		Applications/Communication
 Source0:	https://download.gnome.org/sources/calls/41/calls-%{version}.%{subver}.tar.xz
-# Source0-md5:	1a29938845ea487027a5cf498830c54c
+# Source0-md5:	dd5440d4e6dcb2f49f1ff1d79e97f719
 URL:		https://gitlab.gnome.org/GNOME/calls
 BuildRequires:	ModemManager-devel >= 1.12.0
 BuildRequires:	evolution-data-server-devel >= 1.2
@@ -16,11 +16,13 @@ BuildRequires:	folks-devel
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.58
 BuildRequires:	gom-devel
+BuildRequires:	gstreamer-devel >= 1.0
 BuildRequires:	gtk+3-devel >= 3.0
 BuildRequires:	libcallaudio-devel
 BuildRequires:	libfeedback-devel
 BuildRequires:	libhandy1-devel >= 1.1.90
 BuildRequires:	libpeas-devel
+BuildRequires:	libsecret-devel
 BuildRequires:	meson >= 0.49.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
