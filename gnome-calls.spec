@@ -1,14 +1,17 @@
 # TODO: separate ModemManager/ofono/sofia-sip plugins?
+#
+# Conditional build:
+%bcond_without	apidocs	# gtk-doc based API documentation
+
 Summary:	GNOME phone dialer and call handler
 Summary(pl.UTF-8):	Aplikacja GNOME do dzwonienia i przyjmowania połączeń
 Name:		gnome-calls
-Version:	41
-%define	subver	rc
-Release:	0.%{subver}.1
+Version:	41.0
+Release:	1
 License:	GPL v3+
 Group:		Applications/Communication
-Source0:	https://download.gnome.org/sources/calls/41/calls-%{version}.%{subver}.tar.xz
-# Source0-md5:	d84847f68939b1fdeb2ebd11f3c49363
+Source0:	https://download.gnome.org/sources/calls/41/calls-%{version}.tar.xz
+# Source0-md5:	e0dc701f5d56a491b7382a21d2733b38
 URL:		https://gitlab.gnome.org/GNOME/calls
 BuildRequires:	ModemManager-devel >= 1.12.0
 BuildRequires:	evolution-data-server-devel >= 1.2
@@ -18,6 +21,7 @@ BuildRequires:	glib2-devel >= 1:2.58
 BuildRequires:	gom-devel
 BuildRequires:	gstreamer-devel >= 1.0
 BuildRequires:	gtk+3-devel >= 3.0
+%{?with_apidocs:BuildRequires:	gtk-doc}
 BuildRequires:	libcallaudio-devel
 BuildRequires:	libfeedback-devel
 BuildRequires:	libhandy1-devel >= 1.1.90
@@ -62,11 +66,11 @@ Documentation of GNOME Calls DBus API.
 Dokumentacja API DBus aplikacji GNOME Calls.
 
 %prep
-%setup -q -n calls-%{version}.%{subver}
+%setup -q -n calls-%{version}
 
 %build
 %meson build \
-	-Dgtk_doc=true
+	%{?with_apidocs:-Dgtk_doc=true}
 
 %ninja_build -C build
 
@@ -118,6 +122,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/scalable/apps/org.gnome.Calls.svg
 %{_iconsdir}/hicolor/symbolic/apps/org.gnome.Calls-symbolic.svg
 
+%if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
 %{_gtkdocdir}/calls
+%endif
