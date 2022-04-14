@@ -6,32 +6,34 @@
 Summary:	GNOME phone dialer and call handler
 Summary(pl.UTF-8):	Aplikacja GNOME do dzwonienia i przyjmowania połączeń
 Name:		gnome-calls
-Version:	41.1
+Version:	42.0
 Release:	1
 License:	GPL v3+
 Group:		Applications/Communication
-Source0:	https://download.gnome.org/sources/calls/41/calls-%{version}.tar.xz
-# Source0-md5:	efd3cf8cb70e410143b16903ca9c2fa3
+Source0:	https://download.gnome.org/sources/calls/42/calls-%{version}.tar.xz
+# Source0-md5:	59603ee27bc71cd2fe8a9e5185ba7204
 URL:		https://gitlab.gnome.org/GNOME/calls
 BuildRequires:	ModemManager-devel >= 1.12.0
 BuildRequires:	evolution-data-server-devel >= 1.2
 BuildRequires:	folks-devel
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.58
+%{?with_apidocs:BuildRequires:	gi-docgen >= 2021.1}
+BuildRequires:	glib2-devel >= 1:2.62
 BuildRequires:	gom-devel
 BuildRequires:	gstreamer-devel >= 1.0
-BuildRequires:	gtk+3-devel >= 3.0
+BuildRequires:	gtk+3-devel >= 3.22
 %{?with_apidocs:BuildRequires:	gtk-doc}
 BuildRequires:	libcallaudio-devel
 BuildRequires:	libfeedback-devel
-BuildRequires:	libhandy1-devel >= 1.1.90
+BuildRequires:	libhandy1-devel >= 1.4.0
 BuildRequires:	libpeas-devel
 BuildRequires:	libsecret-devel
-BuildRequires:	meson >= 0.49.0
+BuildRequires:	meson >= 0.56.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 # pkgconfig(sofia-sip-ua-glib)
 BuildRequires:	sofia-sip-devel
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala
@@ -43,9 +45,10 @@ Requires(post,postun):	glib2 >= 1:2.58
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	ModemManager >= 1.12.0
 Requires:	evolution-data-server
-Requires:	glib2 >= 1:2.58
+Requires:	glib2 >= 1:2.62
+Requires:	gtk+3 >= 3.22
 Requires:	hicolor-icon-theme
-Requires:	libhandy1 >= 1.1.90
+Requires:	libhandy1 >= 1.4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -58,6 +61,7 @@ Aplikacja GNOME do dzwonienia i przyjmowania połączeń.
 Summary:	Documentation of GNOME Calls DBus API
 Summary(pl.UTF-8):	Dokumentacja API DBus aplikacji GNOME Calls
 Group:		Documentation
+BuildArch:	noarch
 
 %description apidocs
 Documentation of GNOME Calls DBus API.
@@ -79,7 +83,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %ninja_install -C build
 
-%find_lang calls
+# calls and calls-ui domains
+%find_lang calls --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -100,7 +105,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gnome-calls
 %{_sysconfdir}/xdg/autostart/org.gnome.Calls-daemon.desktop
 %dir %{_libdir}/calls
-%dir %{_libdir}/calls/plugins/
+%dir %{_libdir}/calls/plugins
 %dir %{_libdir}/calls/plugins/dummy
 %attr(755,root,root) %{_libdir}/calls/plugins/dummy/libdummy.so
 %{_libdir}/calls/plugins/dummy/dummy.plugin
