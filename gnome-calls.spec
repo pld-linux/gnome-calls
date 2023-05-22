@@ -1,4 +1,5 @@
 # TODO: separate ModemManager/ofono/sofia-sip plugins?
+# - system call-ui library
 #
 # Conditional build:
 %bcond_without	apidocs	# gtk-doc based API documentation
@@ -6,12 +7,12 @@
 Summary:	GNOME phone dialer and call handler
 Summary(pl.UTF-8):	Aplikacja GNOME do dzwonienia i przyjmowania połączeń
 Name:		gnome-calls
-Version:	42.0
+Version:	43.3
 Release:	1
 License:	GPL v3+
 Group:		Applications/Communication
-Source0:	https://download.gnome.org/sources/calls/42/calls-%{version}.tar.xz
-# Source0-md5:	59603ee27bc71cd2fe8a9e5185ba7204
+Source0:	https://download.gnome.org/sources/calls/43/calls-%{version}.tar.xz
+# Source0-md5:	1fa5af6d6f9e0c3d0c54a44f29d62b22
 URL:		https://gitlab.gnome.org/GNOME/calls
 BuildRequires:	ModemManager-devel >= 1.12.0
 BuildRequires:	evolution-data-server-devel >= 1.2
@@ -23,7 +24,7 @@ BuildRequires:	gom-devel
 BuildRequires:	gstreamer-devel >= 1.0
 BuildRequires:	gtk+3-devel >= 3.22
 %{?with_apidocs:BuildRequires:	gtk-doc}
-BuildRequires:	libcallaudio-devel
+BuildRequires:	libcallaudio-devel >= 0.1
 BuildRequires:	libfeedback-devel
 BuildRequires:	libhandy1-devel >= 1.4.0
 BuildRequires:	libpeas-devel
@@ -105,27 +106,29 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gnome-calls
 %{_sysconfdir}/xdg/autostart/org.gnome.Calls-daemon.desktop
 %dir %{_libdir}/calls
-%dir %{_libdir}/calls/plugins
-%dir %{_libdir}/calls/plugins/dummy
-%attr(755,root,root) %{_libdir}/calls/plugins/dummy/libdummy.so
-%{_libdir}/calls/plugins/dummy/dummy.plugin
-%dir %{_libdir}/calls/plugins/mm
+%dir %{_libdir}/calls/plugins/provider
+%dir %{_libdir}/calls/plugins/provider/dummy
+%attr(755,root,root) %{_libdir}/calls/plugins/provider/dummy/libdummy.so
+%{_libdir}/calls/plugins/provider/dummy/dummy.plugin
+%dir %{_libdir}/calls/plugins/provider/mm
 # R: ModemManager
-%attr(755,root,root) %{_libdir}/calls/plugins/mm/libmm.so
-%{_libdir}/calls/plugins/mm/mm.plugin
-%dir %{_libdir}/calls/plugins/ofono
+%attr(755,root,root) %{_libdir}/calls/plugins/provider/mm/libmm.so
+%{_libdir}/calls/plugins/provider/mm/mm.plugin
+%dir %{_libdir}/calls/plugins/provider/ofono
 # R: ofono
-%attr(755,root,root) %{_libdir}/calls/plugins/ofono/libofono.so
-%{_libdir}/calls/plugins/ofono/ofono.plugin
+%attr(755,root,root) %{_libdir}/calls/plugins/provider/ofono/libofono.so
+%{_libdir}/calls/plugins/provider/ofono/ofono.plugin
 # R: sofia-sip
-%dir %{_libdir}/calls/plugins/sip
-%attr(755,root,root) %{_libdir}/calls/plugins/sip/libsip.so
-%{_libdir}/calls/plugins/sip/sip.plugin
+%dir %{_libdir}/calls/plugins/provider/sip
+%attr(755,root,root) %{_libdir}/calls/plugins/provider/sip/libsip.so
+%{_libdir}/calls/plugins/provider/sip/sip.plugin
+%{_datadir}/dbus-1/services/org.gnome.Calls.service
 %{_datadir}/glib-2.0/schemas/org.gnome.Calls.gschema.xml
 %{_datadir}/metainfo/org.gnome.Calls.metainfo.xml
 %{_desktopdir}/org.gnome.Calls.desktop
 %{_iconsdir}/hicolor/scalable/apps/org.gnome.Calls.svg
 %{_iconsdir}/hicolor/symbolic/apps/org.gnome.Calls-symbolic.svg
+%{_mandir}/man1/gnome-calls.1*
 
 %if %{with apidocs}
 %files apidocs
