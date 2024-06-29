@@ -7,12 +7,12 @@
 Summary:	GNOME phone dialer and call handler
 Summary(pl.UTF-8):	Aplikacja GNOME do dzwonienia i przyjmowania połączeń
 Name:		gnome-calls
-Version:	46.0
+Version:	46.3
 Release:	1
 License:	GPL v3+
 Group:		Applications/Communication
 Source0:	https://download.gnome.org/sources/calls/46/calls-%{version}.tar.xz
-# Source0-md5:	8e092315b1d0a8414e85d6a76c2925be
+# Source0-md5:	bc86022a6b03c1caf77acbe8dbd1c0d9
 URL:		https://gitlab.gnome.org/GNOME/calls
 BuildRequires:	ModemManager-devel >= 1.12.0
 BuildRequires:	evolution-data-server-devel >= 1.2
