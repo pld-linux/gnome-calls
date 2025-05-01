@@ -9,12 +9,12 @@
 Summary:	GNOME phone dialer and call handler
 Summary(pl.UTF-8):	Aplikacja GNOME do dzwonienia i przyjmowania połączeń
 Name:		gnome-calls
-Version:	47.0
+Version:	48.1
 Release:	1
 License:	GPL v3+
 Group:		Applications/Communication
-Source0:	https://download.gnome.org/sources/calls/47/calls-%{version}.tar.xz
-# Source0-md5:	1913e1584192ad088bf6c01559fa1bbf
+Source0:	https://download.gnome.org/sources/calls/48/calls-%{version}.tar.xz
+# Source0-md5:	df243a2879e59cdfc680f99576083b0c
 URL:		https://gitlab.gnome.org/GNOME/calls
 BuildRequires:	ModemManager-devel >= 1.12.0
 BuildRequires:	evolution-data-server-devel >= 1.2
@@ -26,7 +26,7 @@ BuildRequires:	gom-devel
 BuildRequires:	gstreamer-devel >= 1.0
 BuildRequires:	gtk4-devel >= 4.12
 %{?with_apidocs:BuildRequires:	gtk-doc}
-BuildRequires:	libadwaita-devel >= 1.5
+BuildRequires:	libadwaita-devel >= 1.6
 BuildRequires:	libcallaudio-devel >= 0.1
 BuildRequires:	libfeedback-devel
 BuildRequires:	libpeas2-devel >= 2.0
@@ -37,7 +37,7 @@ BuildRequires:	pkgconfig
 # pkgconfig(sofia-sip-ua-glib)
 BuildRequires:	sofia-sip-devel
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala
 BuildRequires:	vala-evolution-data-server >= 1.2
@@ -51,7 +51,7 @@ Requires:	evolution-data-server
 Requires:	glib2 >= 1:2.74
 Requires:	gtk4 >= 4.12
 Requires:	hicolor-icon-theme
-Requires:	libadwaita >= 1.5
+Requires:	libadwaita >= 1.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -76,15 +76,15 @@ Dokumentacja API DBus aplikacji GNOME Calls.
 %setup -q -n calls-%{version}
 
 %build
-%meson build \
+%meson \
 	%{?with_apidocs:-Dgtk_doc=true}
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 # calls and calls-ui domains
 %find_lang calls --all-name
