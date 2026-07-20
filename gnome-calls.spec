@@ -9,12 +9,12 @@
 Summary:	GNOME phone dialer and call handler
 Summary(pl.UTF-8):	Aplikacja GNOME do dzwonienia i przyjmowania połączeń
 Name:		gnome-calls
-Version:	48.2
+Version:	50.0
 Release:	1
 License:	GPL v3+
 Group:		Applications/Communication
-Source0:	https://download.gnome.org/sources/calls/48/calls-%{version}.tar.xz
-# Source0-md5:	206aa81c9f2a9e8b2573c5b84c6d4a54
+Source0:	https://download.gnome.org/sources/calls/50/calls-%{version}.tar.xz
+# Source0-md5:	ae8d73e470b20bb27c562ff843f4fe3e
 URL:		https://gitlab.gnome.org/GNOME/calls
 BuildRequires:	ModemManager-devel >= 1.12.0
 BuildRequires:	evolution-data-server-devel >= 1.2
@@ -22,7 +22,9 @@ BuildRequires:	folks-devel
 BuildRequires:	gettext-tools
 %{?with_apidocs:BuildRequires:	gi-docgen >= 2021.1}
 BuildRequires:	glib2-devel >= 1:2.74
+BuildRequires:	gmobile-devel >= 0.3.0
 BuildRequires:	gom-devel
+BuildRequires:	gsound-devel
 BuildRequires:	gstreamer-devel >= 1.0
 BuildRequires:	gtk4-devel >= 4.12
 %{?with_apidocs:BuildRequires:	gtk-doc}
@@ -32,6 +34,7 @@ BuildRequires:	libfeedback-devel
 BuildRequires:	libpeas2-devel >= 2.0
 BuildRequires:	libsecret-devel
 BuildRequires:	meson >= 1.0
+BuildRequires:	mobile-broadband-provider-info-devel
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 # pkgconfig(sofia-sip-ua-glib)
@@ -49,6 +52,7 @@ Requires(post,postun):	gtk-update-icon-cache
 Requires:	ModemManager >= 1.12.0
 Requires:	evolution-data-server
 Requires:	glib2 >= 1:2.74
+Requires:	gmobile >= 0.3.0
 Requires:	gtk4 >= 4.12
 Requires:	hicolor-icon-theme
 Requires:	libadwaita >= 1.6
